@@ -2596,6 +2596,128 @@
             { nama: "Fajar Pratama", nisn: "0048765432", tahun: "2023", jurusan: "Multimedia / DKV", status: "Mencari Kerja", instansi: "-", keselarasan: "-", saran: "Perlu bimbingan CV portofolio kreatif dari sekolah." }
         ];
 
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw__0bWDFbHszk-yMZBlhq-yEJ2QsWcEWsq1NvhLvhLAjBcICKfQiCtbVw1jI3FoFQ5wg/exec";
+
+        // Sync local storage with Google Sheets online database
+        async function syncDataWithGoogleSheets() {
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL);
+                if (!response.ok) throw new Error("Network response not ok");
+                const sheetRows = await response.json();
+                
+                let localUsers = JSON.parse(localStorage.getItem('bkk_users')) || [];
+                let localTracer = JSON.parse(localStorage.getItem('bkk_tracer')) || [];
+                let changed = false;
+
+                sheetRows.forEach(row => {
+                    // 1. Process Registrations and Print Statuses
+                    if (row.NISN && (row['Tipe Data'] === 'REGISTRASI' || row['Tipe Data'] === 'IZIN_CETAK_BARU')) {
+                        let userIndex = localUsers.findIndex(u => u.nisn.toString() === row.NISN.toString());
+                        if (userIndex !== -1) {
+                            let localStatus = localUsers[userIndex].printStatus || '';
+                            let sheetStatus = row['Status Cetak'] || 'TIDAK AKTIF';
+                            
+                            if (sheetStatus.toLowerCase() === 'disetujui' && localStatus !== 'approved') {
+                                localUsers[userIndex].printStatus = 'approved';
+                                changed = true;
+                            } else if (sheetStatus.toLowerCase() === 'diajukan' && localStatus !== 'requested') {
+                                localUsers[userIndex].printStatus = 'requested';
+                                changed = true;
+                            } else if ((sheetStatus.toLowerCase() === 'cabut' || sheetStatus.toLowerCase() === 'tidak aktif') && localStatus !== '') {
+                                localUsers[userIndex].printStatus = '';
+                                changed = true;
+                            }
+                        } else {
+                            let newStatus = '';
+                            let sheetStatus = row['Status Cetak'] || 'TIDAK AKTIF';
+                            if (sheetStatus.toLowerCase() === 'disetujui') newStatus = 'approved';
+                            else if (sheetStatus.toLowerCase() === 'diajukan') newStatus = 'requested';
+                            
+                            localUsers.push({
+                                name: row.Nama,
+                                email: `alumni-${row.NISN}@smkab.sch.id`,
+                                password: "password123",
+                                nisn: row.NISN.toString(),
+                                jurusan: row.Jurusan,
+                                wa: "",
+                                skills: "",
+                                pendidikan: "SMK Amal Bakti Jatimulyo",
+                                pengalaman: "",
+                                printStatus: newStatus
+                            });
+                            changed = true;
+                        }
+                    }
+                    
+                    // 2. Process Tracer Study Data
+                    if (row.NISN && row['Tipe Data'] === 'TRACER_STUDY') {
+                        let tracerIndex = localTracer.findIndex(t => t.nisn.toString() === row.NISN.toString());
+                        if (tracerIndex === -1) {
+                            localTracer.push({
+                                nama: row.Nama,
+                                nisn: row.NISN.toString(),
+                                tahun: "2026",
+                                jurusan: row.Jurusan,
+                                status: row['Status Cetak'] || "Bekerja", // In apps script column E stores params.status_kerja
+                                instansi: "-",
+                                keselarasan: "Selaras",
+                                saran: "Dikirim via Aplikasi HP."
+                            });
+                            changed = true;
+                        }
+                    }
+                });
+
+                if (changed) {
+                    localStorage.setItem('bkk_users', JSON.stringify(localUsers));
+                    localStorage.setItem('bkk_tracer', JSON.stringify(localTracer));
+                    
+                    updateAuthUiState();
+                    updateHomeStats();
+                    renderJobBoard();
+                    renderHomeTracerChart();
+                    
+                    if (currentAlumni) {
+                        const updatedCur = localUsers.find(u => u.email === currentAlumni.email);
+                        if (updatedCur) {
+                            currentAlumni = updatedCur;
+                            sessionStorage.setItem('current_alumni', JSON.stringify(currentAlumni));
+                        }
+                        updateAK1Card();
+                    }
+                    
+                    const adminActivePane = document.querySelector('.admin-pane.active-pane');
+                    if (adminActivePane) {
+                        const id = adminActivePane.id;
+                        if (id === 'pane-ringkasan') renderAdminStats();
+                        else if (id === 'pane-persetujuan') renderAdminApprovalTable();
+                        else if (id === 'pane-alumni') renderAdminAlumniTable();
+                        else if (id === 'pane-tracer') renderAdminTracerTable();
+                    }
+                }
+            } catch (err) {
+                console.warn("Gagal sinkronisasi data online:", err);
+            }
+        }
+
+        // Send data to Google Sheets
+        async function sendDataToGoogleSheets(action, payload) {
+            try {
+                payload.action = action;
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'text/plain'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                setTimeout(syncDataWithGoogleSheets, 1500);
+            } catch (err) {
+                console.warn("Gagal mengirim data ke Google Sheets:", err);
+            }
+        }
+
         // Initialize LocalStorage Data
         if (!localStorage.getItem('bkk_jobs')) {
             localStorage.setItem('bkk_jobs', JSON.stringify(initialJobs));
@@ -2754,6 +2876,9 @@
 
             users.push(newUser);
             localStorage.setItem('bkk_users', JSON.stringify(users));
+
+            // Sync with Google Sheets online database
+            sendDataToGoogleSheets('register', { nama: name, nisn: nisn, jurusan: jurusan });
 
             alert("Pendaftaran berhasil! Silakan masuk dengan akun baru Anda.");
             toggleAuthModalMode('login');
@@ -3060,6 +3185,14 @@
                 users[idx] = currentAlumni;
                 localStorage.setItem('bkk_users', JSON.stringify(users));
             }
+
+            // Sync with Google Sheets online database
+            sendDataToGoogleSheets('update_print_status', { 
+                nama: currentAlumni.name, 
+                nisn: currentAlumni.nisn, 
+                jurusan: currentAlumni.jurusan, 
+                status_cetak: 'DIAJUKAN' 
+            });
 
             alert("Permohonan izin cetak berhasil diajukan ke Admin BKK!");
             updatePrintApprovalUi();
@@ -3553,6 +3686,9 @@
             tracerDb.push(newTracer);
             localStorage.setItem('bkk_tracer', JSON.stringify(tracerDb));
 
+            // Sync with Google Sheets online database
+            sendDataToGoogleSheets('tracer', { nama: nama, nisn: nisn, jurusan: jurusan, status_kerja: status });
+
             alert("Terima kasih! Data survei Tracer Study Anda berhasil dikirim ke BKK SMK Amal Bakti Jatimulyo.");
             
             uploadedTracerPhotoBase64 = null;
@@ -3743,6 +3879,14 @@
                     currentAlumni.printStatus = users[idx].printStatus;
                     sessionStorage.setItem('current_alumni', JSON.stringify(currentAlumni));
                 }
+
+                // Sync with Google Sheets online database
+                sendDataToGoogleSheets('update_print_status', { 
+                    nama: users[idx].name, 
+                    nisn: users[idx].nisn, 
+                    jurusan: users[idx].jurusan, 
+                    status_cetak: status ? 'DISETUJUI' : 'CABUT' 
+                });
 
                 alert(status ? "Izin cetak disetujui!" : "Akses cetak dikunci.");
                 renderAdminApprovalTable();
@@ -4277,6 +4421,12 @@
 
         // Initial setup on window load
         window.onload = function() {
+            // Initial sync with Google Sheets database
+            syncDataWithGoogleSheets();
+            
+            // Auto sync with Google Sheets every 15 seconds
+            setInterval(syncDataWithGoogleSheets, 15000);
+
             // Initialize Chats in LocalStorage if not present
             if (!localStorage.getItem('bkk_chats')) {
                 const initialChats = [
