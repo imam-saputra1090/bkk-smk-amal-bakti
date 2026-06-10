@@ -183,6 +183,43 @@
             background: #e11d48 !important;
         }
 
+        
+        @media (max-width: 576px) {
+            .brand-logo {
+                font-size: 0.88rem !important;
+                gap: 5px !important;
+            }
+            .brand-logo i {
+                font-size: 1.15rem !important;
+            }
+            header {
+                padding: calc(0.5rem + env(safe-area-inset-top, 32px)) 3% 0.5rem 3% !important;
+                gap: 8px !important;
+            }
+            .auth-status-btn-mob {
+                font-size: 0.72rem !important;
+                padding: 0.3rem 0.55rem !important;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .brand-logo {
+                font-size: 0.78rem !important;
+                gap: 4px !important;
+            }
+            .brand-logo i {
+                font-size: 1.0rem !important;
+            }
+            header {
+                padding: calc(0.4rem + env(safe-area-inset-top, 32px)) 2% 0.4rem 2% !important;
+                gap: 5px !important;
+            }
+            .auth-status-btn-mob {
+                font-size: 0.65rem !important;
+                padding: 0.25rem 0.45rem !important;
+            }
+        }
+
         /* Mobile Adjustments */
         @media (max-width: 992px) {
         .auth-status-btn-mob {
@@ -1527,7 +1564,7 @@
                 <div class="grid-3">
                 <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <i class="fa-solid fa-id-card-clip" style="font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 1.5rem;"></i>
+                        <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1.2rem;"><i class="fa-solid fa-id-card-clip" style="font-size: 2.5rem; color: var(--primary-blue); margin: 0;"></i></div>
                         <h3 style="margin-bottom: 0.5rem; font-family: 'Outfit';">Kartu AK-1 & CV Digital</h3>
                         <p style="color: var(--text-light); font-size: 0.95rem; margin-bottom: 1.5rem;">Lengkapi data diri Anda, pilih latar belakang kartu digital kesukaanmu, lalu cetak Kartu Pencari Kerja AK-1 resmi sekolah beserta CV-mu secara otomatis.</p>
                     </div>
@@ -1535,7 +1572,7 @@
                 </div>
                 <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <i class="fa-solid fa-bullhorn" style="font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 1.5rem;"></i>
+                        <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1.2rem;"><i class="fa-solid fa-bullhorn" style="font-size: 2.5rem; color: var(--accent-gold); margin: 0;"></i></div>
                         <h3 style="margin-bottom: 0.5rem; font-family: 'Outfit';">Penyaluran Loker WhatsApp</h3>
                         <p style="color: var(--text-light); font-size: 0.95rem; margin-bottom: 1.5rem;">Cari info lowongan kerja dari perusahaan mitra. Lamaran dikirim secara dinamis langsung ke kontak WhatsApp HRD perusahaan dalam satu klik.</p>
                     </div>
@@ -1543,7 +1580,7 @@
                 </div>
                 <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <i class="fa-solid fa-users" style="font-size: 2.5rem; color: #10b981; margin-bottom: 1.5rem;"></i>
+                        <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1.2rem;"><i class="fa-solid fa-users" style="font-size: 2.5rem; color: #10b981; margin: 0;"></i></div>
                         <h3 style="margin-bottom: 0.5rem; font-family: 'Outfit';">Sharing Info Loker</h3>
                         <p style="color: var(--text-light); font-size: 0.95rem; margin-bottom: 1.5rem;">Dapatkan lowongan kerja yang direkomendasikan langsung oleh sesama alumni. Bagikan info kerja yang Anda temui untuk membantu sesama.</p>
                     </div>
@@ -1551,7 +1588,7 @@
                 </div>
                 <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <i class="fa-solid fa-handshake" style="font-size: 2.5rem; color: #8b5cf6; margin-bottom: 1.5rem;"></i>
+                        <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1.2rem;"><i class="fa-solid fa-handshake" style="font-size: 2.5rem; color: #8b5cf6; margin: 0;"></i></div>
                         <h3 style="margin-bottom: 0.5rem; font-family: 'Outfit';">Mitra & Profil BKK</h3>
                         <p style="color: var(--text-light); font-size: 0.95rem; margin-bottom: 1.5rem;">Ketahui profil lembaga Bursa Kerja Khusus SMK Amal Bakti Jatimulyo, visi-misi, pengelola, serta daftar mitra industri resmi (DU/DI).</p>
                     </div>
