@@ -1072,7 +1072,7 @@
         @media print {
             @page {
                 size: A4;
-                margin: 0;
+                margin: 1.2cm 1.2cm 1.2cm 1.5cm; /* Margin resmi A4: Atas/Kanan/Bawah 1.2cm, Kiri 1.5cm (untuk jilid) */
             }
             body {
                 background: white !important;
@@ -1263,13 +1263,12 @@
             /* 2. PRINT CV / RESUME ONLY */
             body.print-cv-only #print-section #printable-cv-doc {
                 display: block !important;
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 21cm !important;
+                position: relative !important;
+                margin: 0 auto !important;
+                width: 100% !important;
                 box-sizing: border-box !important;
                 background: white !important;
-                padding: 2cm !important; /* Margin A4 rapi */
+                padding: 0 !important; /* Margin halaman ditangani oleh @page */
             }
             body.print-cv-only #print-section #printable-cv-doc table {
                 display: table !important;
@@ -1293,14 +1292,13 @@
             /* 3. PRINT LETTER ONLY */
             body.print-letter-only #print-section #doc-sheet-preview {
                 display: block !important;
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 21cm !important;
+                position: relative !important;
+                margin: 0 auto !important;
+                width: 100% !important;
                 border: none !important;
                 background: white !important;
                 box-shadow: none !important;
-                padding: 1cm 2cm 1cm 2.5cm !important; /* Margin A4 rapi: Atas 1cm, Kanan 2cm, Bawah 1cm, Kiri 2.5cm */
+                padding: 0 !important; /* Margin halaman ditangani oleh @page */
                 page-break-inside: avoid !important;
                 box-sizing: border-box !important;
             }
@@ -1316,7 +1314,28 @@
                 margin-bottom: 0.4rem !important;
             }
             body.print-letter-only #print-section #doc-sheet-preview .doc-footer {
-                margin-top: 1rem !important;
+                margin-top: 1.2rem !important;
+                display: block !important;
+                page-break-inside: avoid !important;
+            }
+            body.print-letter-only #print-section #doc-sheet-preview .doc-signature {
+                display: block !important;
+                margin-left: auto !important; /* Sejajarkan tanda tangan ke kanan */
+                width: 250px !important;
+                text-align: center !important;
+                position: relative !important;
+                page-break-inside: avoid !important;
+            }
+            body.print-letter-only #print-section #doc-sheet-preview .doc-signature div {
+                display: block !important;
+                height: 75px !important;
+                text-align: center !important;
+                position: relative !important;
+            }
+            body.print-letter-only #print-section #doc-sheet-preview .doc-signature img {
+                display: inline-block !important;
+                height: 75px !important;
+                width: auto !important;
             }
             body.print-letter-only #print-section #doc-sheet-preview .doc-kop {
                 display: flex !important;
@@ -1346,14 +1365,13 @@
             /* 4. PRINT REPORT ONLY */
             body.print-report-only #print-section #disnaker-report-doc {
                 display: block !important;
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 21cm !important;
+                position: relative !important;
+                margin: 0 auto !important;
+                width: 100% !important;
                 border: none !important;
                 background: white !important;
                 box-shadow: none !important;
-                padding: 2cm !important; /* Margin A4 rapi */
+                padding: 0 !important; /* Margin halaman ditangani oleh @page */
                 box-sizing: border-box !important;
             }
             body.print-report-only #print-section #disnaker-report-doc table {
