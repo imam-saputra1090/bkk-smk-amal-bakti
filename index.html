@@ -164,8 +164,30 @@
             padding-bottom: 2rem;
         }
 
+                .auth-status-btn-mob {
+            display: none;
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            background: var(--primary-blue);
+            color: white !important;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            align-items: center;
+            gap: 6px;
+            z-index: 101;
+        }
+        .auth-status-btn-mob.logout-style {
+            background: #e11d48 !important;
+        }
+
         /* Mobile Adjustments */
         @media (max-width: 992px) {
+        .auth-status-btn-mob {
+            display: inline-flex;
+        }
             .desktop-nav {
                 display: none;
             }
@@ -1425,6 +1447,9 @@
         <a href="#" class="brand-logo" onclick="switchView('beranda')">
             <i class="fa-solid fa-graduation-cap"></i> E-BKK SMK AMAL BAKTI
         </a>
+        <a href="#" id="auth-btn-mob" class="auth-status-btn-mob" onclick="openLoginModal()">
+            <i class="fa-solid fa-right-to-bracket"></i> Login
+        </a>
         <nav class="desktop-nav">
             <a href="#" id="desk-nav-beranda" class="active" onclick="switchView('beranda')"><i class="fa-solid fa-house"></i> Beranda</a>
             <a href="#" id="desk-nav-loker" onclick="switchView('loker')"><i class="fa-solid fa-briefcase"></i> Lowongan</a>
@@ -1449,7 +1474,7 @@
         </a>
         <a href="#" id="mob-nav-cv" class="bottom-nav-item" onclick="switchView('cv')">
             <i class="fa-solid fa-address-card"></i>
-            <span>CV / AK-1</span>
+            <span>Profil / CV</span>
         </a>
         <a href="#" id="mob-nav-sharing" class="bottom-nav-item" onclick="switchView('sharing')">
             <i class="fa-solid fa-paper-plane"></i>
@@ -1500,24 +1525,41 @@
                 </div>
                 
                 <div class="grid-3">
-                    <div class="card">
+                <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
                         <i class="fa-solid fa-id-card-clip" style="font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 1.5rem;"></i>
                         <h3 style="margin-bottom: 0.5rem; font-family: 'Outfit';">Kartu AK-1 & CV Digital</h3>
-                        <p style="color: var(--text-light); font-size: 0.95rem;">Lengkapi data diri Anda, pilih latar belakang kartu digital kesukaanmu, lalu cetak Kartu Pencari Kerja AK-1 resmi sekolah beserta CV-mu secara otomatis.</p>
+                        <p style="color: var(--text-light); font-size: 0.95rem; margin-bottom: 1.5rem;">Lengkapi data diri Anda, pilih latar belakang kartu digital kesukaanmu, lalu cetak Kartu Pencari Kerja AK-1 resmi sekolah beserta CV-mu secara otomatis.</p>
                     </div>
-                    <div class="card">
+                    <button class="btn-card" style="margin-top: auto;" onclick="switchView('cv')">Buka Profil & CV</button>
+                </div>
+                <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
                         <i class="fa-solid fa-bullhorn" style="font-size: 2.5rem; color: var(--accent-gold); margin-bottom: 1.5rem;"></i>
                         <h3 style="margin-bottom: 0.5rem; font-family: 'Outfit';">Penyaluran Loker WhatsApp</h3>
-                        <p style="color: var(--text-light); font-size: 0.95rem;">Cari info lowongan kerja dari perusahaan mitra. Lamaran dikirim secara dinamis langsung ke kontak WhatsApp HRD perusahaan dalam satu klik.</p>
+                        <p style="color: var(--text-light); font-size: 0.95rem; margin-bottom: 1.5rem;">Cari info lowongan kerja dari perusahaan mitra. Lamaran dikirim secara dinamis langsung ke kontak WhatsApp HRD perusahaan dalam satu klik.</p>
                     </div>
-                    <div class="card">
+                    <button class="btn-card" style="margin-top: auto;" onclick="switchView('loker')">Cari Lowongan</button>
+                </div>
+                <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
                         <i class="fa-solid fa-users" style="font-size: 2.5rem; color: #10b981; margin-bottom: 1.5rem;"></i>
                         <h3 style="margin-bottom: 0.5rem; font-family: 'Outfit';">Sharing Info Loker</h3>
-                        <p style="color: var(--text-light); font-size: 0.95rem;">Dapatkan lowongan kerja yang direkomendasikan langsung oleh sesama alumni. Bagikan info kerja yang Anda temui untuk membantu sesama.</p>
+                        <p style="color: var(--text-light); font-size: 0.95rem; margin-bottom: 1.5rem;">Dapatkan lowongan kerja yang direkomendasikan langsung oleh sesama alumni. Bagikan info kerja yang Anda temui untuk membantu sesama.</p>
                     </div>
+                    <button class="btn-card" style="margin-top: auto;" onclick="switchView('sharing')">Mulai Berbagi</button>
                 </div>
-
-                <!-- Info Banner Section -->
+                <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <i class="fa-solid fa-handshake" style="font-size: 2.5rem; color: #8b5cf6; margin-bottom: 1.5rem;"></i>
+                        <h3 style="margin-bottom: 0.5rem; font-family: 'Outfit';">Mitra & Profil BKK</h3>
+                        <p style="color: var(--text-light); font-size: 0.95rem; margin-bottom: 1.5rem;">Ketahui profil lembaga Bursa Kerja Khusus SMK Amal Bakti Jatimulyo, visi-misi, pengelola, serta daftar mitra industri resmi (DU/DI).</p>
+                    </div>
+                    <button class="btn-card" style="margin-top: auto;" onclick="switchView('mitra')">Buka Profil BKK</button>
+                </div>
+            </div>
+            
+            <!-- Info Banner Section -->
                 <div class="card" style="background: linear-gradient(135deg, rgba(11, 95, 181, 0.05), rgba(253, 185, 19, 0.05)); border: 1px solid rgba(11, 95, 181, 0.15); margin-bottom: 3rem;">
                     <div style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
                         <div style="flex-grow: 1; min-width: 250px;">
@@ -3144,14 +3186,28 @@
 
         function updateAuthUiState() {
             const authBtn = document.getElementById('auth-btn');
+            const authBtnMob = document.getElementById('auth-btn-mob');
             if (currentAlumni) {
-                authBtn.innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> Keluar (${currentAlumni.name.split(' ')[0]})`;
+                const shortName = currentAlumni.name.split(' ')[0];
+                authBtn.innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> Keluar (${shortName})`;
                 authBtn.setAttribute('onclick', 'handleAlumniLogout()');
                 authBtn.classList.add('logout-style');
+                
+                if (authBtnMob) {
+                    authBtnMob.innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> Keluar`;
+                    authBtnMob.setAttribute('onclick', 'handleAlumniLogout()');
+                    authBtnMob.classList.add('logout-style');
+                }
             } else {
                 authBtn.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> Login Alumni`;
                 authBtn.setAttribute('onclick', 'openLoginModal()');
                 authBtn.classList.remove('logout-style');
+                
+                if (authBtnMob) {
+                    authBtnMob.innerHTML = `<i class="fa-solid fa-right-to-bracket"></i> Login`;
+                    authBtnMob.setAttribute('onclick', 'openLoginModal()');
+                    authBtnMob.classList.remove('logout-style');
+                }
             }
         }
 
