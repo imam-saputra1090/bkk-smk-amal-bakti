@@ -1300,9 +1300,23 @@
                 border: none !important;
                 background: white !important;
                 box-shadow: none !important;
-                padding: 2cm 2cm 2cm 2.5cm !important; /* Margin A4 rapi: Atas 2cm, Kanan 2cm, Bawah 2cm, Kiri 2.5cm */
+                padding: 1cm 2cm 1cm 2.5cm !important; /* Margin A4 rapi: Atas 1cm, Kanan 2cm, Bawah 1cm, Kiri 2.5cm */
                 page-break-inside: avoid !important;
                 box-sizing: border-box !important;
+            }
+            body.print-letter-only #print-section #doc-sheet-preview .doc-kop {
+                margin-bottom: 0.8rem !important;
+                padding-bottom: 0.5rem !important;
+            }
+            body.print-letter-only #print-section #doc-sheet-preview p {
+                margin-bottom: 0.6rem !important;
+            }
+            body.print-letter-only #print-section #doc-sheet-preview table {
+                margin-top: 0.4rem !important;
+                margin-bottom: 0.4rem !important;
+            }
+            body.print-letter-only #print-section #doc-sheet-preview .doc-footer {
+                margin-top: 1rem !important;
             }
             body.print-letter-only #print-section #doc-sheet-preview .doc-kop {
                 display: flex !important;
