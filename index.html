@@ -2609,29 +2609,52 @@
                 let localTracer = JSON.parse(localStorage.getItem('bkk_tracer')) || [];
                 let changed = false;
 
+                // Pre-resolve status by NISN to handle multiple conflicting rows (e.g. REGISTRASI vs IZIN_CETAK_BARU)
+                let resolvedStatuses = {};
+                sheetRows.forEach(row => {
+                    if (row.NISN && (row['Tipe Data'] === 'REGISTRASI' || row['Tipe Data'] === 'IZIN_CETAK_BARU')) {
+                        let nisn = row.NISN.toString();
+                        let sheetStatus = (row['Status Cetak'] || 'TIDAK AKTIF').toLowerCase();
+                        
+                        if (!resolvedStatuses[nisn]) {
+                            resolvedStatuses[nisn] = sheetStatus;
+                        } else {
+                            // 'disetujui' has the highest precedence, then 'diajukan', then 'tidak aktif' / 'cabut'
+                            let current = resolvedStatuses[nisn];
+                            if (sheetStatus === 'disetujui') {
+                                resolvedStatuses[nisn] = 'disetujui';
+                            } else if (sheetStatus === 'diajukan' && current !== 'disetujui') {
+                                resolvedStatuses[nisn] = 'diajukan';
+                            } else if (sheetStatus === 'cabut' && current !== 'disetujui' && current !== 'diajukan') {
+                                resolvedStatuses[nisn] = 'cabut';
+                            }
+                        }
+                    }
+                });
+
                 sheetRows.forEach(row => {
                     // 1. Process Registrations and Print Statuses
                     if (row.NISN && (row['Tipe Data'] === 'REGISTRASI' || row['Tipe Data'] === 'IZIN_CETAK_BARU')) {
                         let userIndex = localUsers.findIndex(u => u.nisn.toString() === row.NISN.toString());
+                        let finalStatus = resolvedStatuses[row.NISN.toString()];
+                        
                         if (userIndex !== -1) {
                             let localStatus = localUsers[userIndex].printStatus || '';
-                            let sheetStatus = row['Status Cetak'] || 'TIDAK AKTIF';
                             
-                            if (sheetStatus.toLowerCase() === 'disetujui' && localStatus !== 'approved') {
+                            if (finalStatus === 'disetujui' && localStatus !== 'approved') {
                                 localUsers[userIndex].printStatus = 'approved';
                                 changed = true;
-                            } else if (sheetStatus.toLowerCase() === 'diajukan' && localStatus !== 'requested') {
+                            } else if (finalStatus === 'diajukan' && localStatus !== 'requested') {
                                 localUsers[userIndex].printStatus = 'requested';
                                 changed = true;
-                            } else if ((sheetStatus.toLowerCase() === 'cabut' || sheetStatus.toLowerCase() === 'tidak aktif') && localStatus !== '') {
+                            } else if ((finalStatus === 'cabut' || finalStatus === 'tidak aktif' || finalStatus === 'tidak_aktif') && localStatus !== '') {
                                 localUsers[userIndex].printStatus = '';
                                 changed = true;
                             }
                         } else {
                             let newStatus = '';
-                            let sheetStatus = row['Status Cetak'] || 'TIDAK AKTIF';
-                            if (sheetStatus.toLowerCase() === 'disetujui') newStatus = 'approved';
-                            else if (sheetStatus.toLowerCase() === 'diajukan') newStatus = 'requested';
+                            if (finalStatus === 'disetujui') newStatus = 'approved';
+                            else if (finalStatus === 'diajukan') newStatus = 'requested';
                             
                             localUsers.push({
                                 name: row.Nama,
