@@ -1070,6 +1070,10 @@
 
         /* Print Media Styles for Absolute Printing Size matching A4 and Credit Card (8.6cm x 5.4cm) */
         @media print {
+            @page {
+                size: A4;
+                margin: 0;
+            }
             body {
                 background: white !important;
                 color: black !important;
@@ -1265,6 +1269,7 @@
                 width: 21cm !important;
                 box-sizing: border-box !important;
                 background: white !important;
+                padding: 2cm !important; /* Margin A4 rapi */
             }
             body.print-cv-only #print-section #printable-cv-doc table {
                 display: table !important;
@@ -1295,8 +1300,9 @@
                 border: none !important;
                 background: white !important;
                 box-shadow: none !important;
-                padding: 1.5cm !important;
+                padding: 2cm 2cm 2cm 2.5cm !important; /* Margin A4 rapi: Atas 2cm, Kanan 2cm, Bawah 2cm, Kiri 2.5cm */
                 page-break-inside: avoid !important;
+                box-sizing: border-box !important;
             }
             body.print-letter-only #print-section #doc-sheet-preview .doc-kop {
                 display: flex !important;
@@ -1333,7 +1339,8 @@
                 border: none !important;
                 background: white !important;
                 box-shadow: none !important;
-                padding: 1.5cm !important;
+                padding: 2cm !important; /* Margin A4 rapi */
+                box-sizing: border-box !important;
             }
             body.print-report-only #print-section #disnaker-report-doc table {
                 border: 1px solid black !important;
