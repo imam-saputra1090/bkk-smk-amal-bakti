@@ -4119,14 +4119,30 @@
                         <p style="text-indent: 1.5cm; margin-bottom: 2rem; text-align: justify;">Demikian surat pengantar ini kami sampaikan, atas kerja sama dan kepercayaan yang terjalin kami ucapkan terima kasih.</p>
                         
                         <div class="doc-footer">
-                            <div class="doc-signature">
+                            <div class="doc-signature" style="position: relative;">
                                 <p>${document.dateFooter}</p>
-                                <p style="margin-bottom: 4rem;">Ketua BKK SMK Amal Bakti Jatimulyo</p>
+                                <p style="margin-bottom: 0.2rem;">Ketua BKK SMK Amal Bakti Jatimulyo</p>
+                                <div style="height: 75px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.2rem; position: relative;">
+                                    <img src="signature-imam.png" alt="Tanda Tangan" style="height: 80px; width: auto; object-fit: contain; z-index: 2; mix-blend-mode: multiply;">
+                                </div>
                                 <p><strong>Imam Saputra, S.T.</strong></p>
                                 <p style="font-size: 8pt; border-top: 1px solid black; margin-top: 2px;">Penetapan Petugas Antar Kerja BKK</p>
+                                
+                                <!-- Curved Blue BKK Stamp -->
+                                <svg width="110" height="110" viewBox="0 0 120 120" style="position: absolute; left: 45%; top: 55%; transform: translate(-50%, -50%) rotate(-12deg); z-index: 1; pointer-events: none;">
+                                    <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(75, 160, 227, 0.85)" stroke-width="2" stroke-dasharray="6, 4" />
+                                    <circle cx="60" cy="60" r="32" fill="none" stroke="rgba(75, 160, 227, 0.85)" stroke-width="1.2" stroke-dasharray="3, 2" />
+                                    <path id="bkkPath" d="M 18,60 A 42,42 0 0,1 102,60" fill="none" />
+                                    <path id="baktiPath" d="M 102,60 A 42,42 0 0,1 18,60" fill="none" />
+                                    <text fill="rgba(75, 160, 227, 0.85)" font-family="Arial, sans-serif" font-weight="900" font-size="11">
+                                        <textPath href="#bkkPath" startOffset="50%" text-anchor="middle">BKK AMAL</textPath>
+                                    </text>
+                                    <text fill="rgba(75, 160, 227, 0.85)" font-family="Arial, sans-serif" font-weight="900" font-size="11">
+                                        <textPath href="#baktiPath" startOffset="50%" text-anchor="middle">BAKTI</textPath>
+                                    </text>
+                                </svg>
                             </div>
                         </div>
-                        <div class="doc-stamp">BKK AMAL BAKTI</div>
                     </div>
                 `;
             } else {
@@ -4169,15 +4185,31 @@
                         <p style="margin-bottom: 2rem;">Demikian, atas perhatian dan kerjasamanya diucapkan terima kasih.</p>
                         
                         <div class="doc-footer">
-                            <div class="doc-signature">
+                            <div class="doc-signature" style="position: relative;">
                                 <p>${document.dateFooter}</p>
                                 <p>Mengetahui,</p>
-                                <p style="margin-bottom: 4rem;">Kepala SMK Amal Bakti Jatimulyo</p>
+                                <p style="margin-bottom: 0.2rem;">Kepala SMK Amal Bakti Jatimulyo</p>
+                                <div style="height: 75px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.2rem; position: relative;">
+                                    <!-- Space for physical signature -->
+                                </div>
                                 <p><strong>SUGIYONO SAPTO S., S.H.</strong></p>
                                 <p style="font-size: 8pt; border-top: 1px solid black; margin-top: 2px;">NIP. 19780512 200501 1 003</p>
+                                
+                                <!-- Curved Blue Yayasan Stamp -->
+                                <svg width="110" height="110" viewBox="0 0 120 120" style="position: absolute; left: 45%; top: 58%; transform: translate(-50%, -50%) rotate(-8deg); z-index: 1; pointer-events: none;">
+                                    <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(75, 160, 227, 0.85)" stroke-width="2" stroke-dasharray="6, 4" />
+                                    <circle cx="60" cy="60" r="32" fill="none" stroke="rgba(75, 160, 227, 0.85)" stroke-width="1.2" stroke-dasharray="3, 2" />
+                                    <path id="yayasanPath" d="M 18,60 A 42,42 0 0,1 102,60" fill="none" />
+                                    <path id="lampungPath" d="M 102,60 A 42,42 0 0,1 18,60" fill="none" />
+                                    <text fill="rgba(75, 160, 227, 0.85)" font-family="Arial, sans-serif" font-weight="900" font-size="9.5">
+                                        <textPath href="#yayasanPath" startOffset="50%" text-anchor="middle">YAYASAN AMAL BAKTI</textPath>
+                                    </text>
+                                    <text fill="rgba(75, 160, 227, 0.85)" font-family="Arial, sans-serif" font-weight="900" font-size="9.5">
+                                        <textPath href="#lampungPath" startOffset="50%" text-anchor="middle">LAMPUNG</textPath>
+                                    </text>
+                                </svg>
                             </div>
                         </div>
-                        <div class="doc-stamp" style="right:120px; font-size:7pt; line-height:1.2; text-align:center;">YAYASAN AMAL BAKTI<br>LAMPUNG</div>
                     </div>
                 `;
             }
