@@ -2197,8 +2197,10 @@
                                     <thead>
                                         <tr>
                                             <th>Nama Alumni</th>
-                                            <th>NISN</th>
+                                            <th>NIS / NISN</th>
                                             <th>Jurusan</th>
+                                            <th>Tahun Lulus</th>
+                                            <th>Status Verifikasi</th>
                                             <th>Status Cetak</th>
                                             <th>Aksi Tindakan</th>
                                         </tr>
@@ -2219,8 +2221,10 @@
                                     <thead>
                                         <tr>
                                             <th>Nama Alumni</th>
-                                            <th>NISN</th>
+                                            <th>NIS / NISN</th>
                                             <th>Jurusan</th>
+                                            <th>Tahun Lulus</th>
+                                            <th>Status Verifikasi</th>
                                             <th>Tempat/Tgl Lahir</th>
                                             <th>Alamat Rumah</th>
                                             <th>WhatsApp</th>
@@ -2429,14 +2433,20 @@
             <!-- Login Form -->
             <form id="alumni-login-form" onsubmit="handleAlumniLogin(event)">
                 <div class="form-group">
-                    <label for="login-email">Alamat Email</label>
-                    <input type="email" id="login-email" class="form-control" required placeholder="nama@email.com">
+                    <label for="login-email">Alamat Email / NISN</label>
+                    <input type="text" id="login-email" class="form-control" required placeholder="nama@email.com atau 10 digit NISN">
                 </div>
                 <div class="form-group">
                     <label for="login-password">Password</label>
-                    <input type="password" id="login-password" class="form-control" required placeholder="Minimal 6 karakter">
+                    <input type="password" id="login-password" class="form-control" required placeholder="Minimal 6 karakter (atau password123)">
                 </div>
-                <button type="submit" class="btn-card" style="margin-top: 2rem;"><i class="fa-solid fa-right-to-bracket"></i> Masuk Sekarang</button>
+                <button type="submit" class="btn-card" style="margin-top: 1.5rem;"><i class="fa-solid fa-right-to-bracket"></i> Masuk Sekarang</button>
+                <div style="background: #f0f7ff; padding: 10px 12px; border-radius: 8px; margin-top: 1rem; border-left: 3px solid #0056b3;">
+                    <p style="font-size: 0.75rem; color: #1e3a8a; margin: 0; line-height: 1.4;">
+                        <i class="fa-solid fa-circle-info" style="color: #0056b3; margin-right: 4px;"></i>
+                        <strong>Info Akun Ter-reset:</strong> Jika cache terhapus atau baru mengunduh APK, masuklah menggunakan <strong>NISN</strong> Anda dan password default <strong><code>password123</code></strong>.
+                    </p>
+                </div>
                 <p style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-light);">
                     Belum punya akun? <a href="#" style="color: var(--primary-blue); font-weight:700;" onclick="toggleAuthModalMode('register')">Registrasi Alumni</a>
                 </p>
@@ -2444,15 +2454,18 @@
 
             <!-- Register Form -->
             <form id="alumni-register-form" onsubmit="handleAlumniRegister(event)" style="display: none;">
+                <div class="form-group" style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+                    <div>
+                        <label for="reg-nisn">NIS Siswa (4 Digit)</label>
+                        <input type="text" id="reg-nisn" class="form-control" required placeholder="Contoh: 3339" oninput="checkNisVerification(this.value)">
+                        <div id="nis-verification-badge" style="margin-top: 8px; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; display: none; transition: all 0.3s ease;"></div>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label for="reg-nama">Nama Lengkap Sesuai Ijazah</label>
                     <input type="text" id="reg-nama" class="form-control" required placeholder="Budi Santoso">
                 </div>
                 <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                    <div>
-                        <label for="reg-nisn">NISN (10 Digit)</label>
-                        <input type="number" id="reg-nisn" class="form-control" required placeholder="006543...">
-                    </div>
                     <div>
                         <label for="reg-jurusan">Jurusan Keahlian</label>
                         <select id="reg-jurusan" class="form-control" required>
@@ -2463,10 +2476,58 @@
                             <option value="Pemasaran">Pemasaran</option>
                         </select>
                     </div>
+                    <div>
+                        <label for="reg-tahun-lulus">Tahun Kelulusan</label>
+                        <select id="reg-tahun-lulus" class="form-control" required>
+                            <option value="2026">2026</option>
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                            <option value="2014">2014</option>
+                            <option value="2013">2013</option>
+                            <option value="2012">2012</option>
+                            <option value="2011">2011</option>
+                            <option value="2010">2010</option>
+                            <option value="2009">2009</option>
+                            <option value="2008">2008</option>
+                            <option value="2007">2007</option>
+                            <option value="2006">2006</option>
+                            <option value="2005">2005</option>
+                            <option value="2004">2004</option>
+                            <option value="2003">2003</option>
+                            <option value="2002">2002</option>
+                            <option value="2001">2001</option>
+                            <option value="2000">2000</option>
+                            <option value="1999">1999</option>
+                            <option value="1998">1998</option>
+                            <option value="1997">1997</option>
+                            <option value="1996">1996</option>
+                            <option value="1995">1995</option>
+                            <option value="1994">1994</option>
+                            <option value="1993">1993</option>
+                            <option value="1992">1992</option>
+                            <option value="1991">1991</option>
+                            <option value="1990">1990</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="reg-email">Alamat Email Aktif</label>
-                    <input type="email" id="reg-email" class="form-control" required placeholder="nama@email.com">
+                <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div>
+                        <label for="reg-wa">Nomor WhatsApp Aktif</label>
+                        <input type="text" id="reg-wa" class="form-control" required placeholder="08xxxxxxxxxx">
+                    </div>
+                    <div>
+                        <label for="reg-email">Alamat Email</label>
+                        <input type="email" id="reg-email" class="form-control" required placeholder="nama@email.com">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="reg-password">Buat Password Baru</label>
@@ -2552,6 +2613,8 @@
                 Android.printPage();
             };
         }
+
+        const STUDENT_WHITELIST = [{"n":"3878","m":"Aditya Putra Pratama","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3963","m":"Aditya Putra","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3958","m":"Ahmad Irsyadul Ibat","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3746","m":"Akbar Bayu Pratama","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3747","m":"Arifian Praditi","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3748","m":"Arjuna Rizqi Ramadhan","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3749","m":"Bima Azka Syaputra","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3750","m":"Cahya Irani P","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3751","m":"Cantika Aprillia","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3752","m":"Dian Pramadhani","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3753","m":"Dina Safira","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3754","m":"Dio Aji Rahman","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3755","m":"Eza Sintia Bela","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3756","m":"Fa'Atiral Rozak","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3757","m":"Fadilah Satrio Putra","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3758","m":"Genta Permana","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3759","m":"Gita Ramadani","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3760","m":"Herlangga","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3761","m":"Linda Fitriyani","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3762","m":"Lucky Hermanto","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3763","m":"Marisya Agnestika Sukma","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3764","m":"Rahfly Yudistira","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3818","m":"Reni","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3765","m":"Rido Ridwana","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3766","m":"Riyo Saputra","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3767","m":"Wahhabi Ar-Rasyid Setiawan","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3768","m":"Zidan Akbar Prasetiyo","k":"X TKJ","j":"Teknik Komputer Jaringan"},{"n":"3769","m":"Agustin Putri Ramadani","k":"X AKL","j":"Akuntansi"},{"n":"3770","m":"Amelia Marsadila","k":"X AKL","j":"Akuntansi"},{"n":"3771","m":"Andin Julia Nisa","k":"X AKL","j":"Akuntansi"},{"n":"3772","m":"Anggereini","k":"X AKL","j":"Akuntansi"},{"n":"3773","m":"Aura Dinda Pratiwi","k":"X AKL","j":"Akuntansi"},{"n":"3774","m":"Dinda Pratiwi","k":"X AKL","j":"Akuntansi"},{"n":"3775","m":"Enjel Lita Putri","k":"X AKL","j":"Akuntansi"},{"n":"3776","m":"Farhan Danuarta","k":"X AKL","j":"Akuntansi"},{"n":"3777","m":"Gendis Alea Delfa","k":"X AKL","j":"Akuntansi"},{"n":"3778","m":"Gita Alivia","k":"X AKL","j":"Akuntansi"},{"n":"3779","m":"Haysah Irawan","k":"X AKL","j":"Akuntansi"},{"n":"3780","m":"Intan Aprilya Putri","k":"X AKL","j":"Akuntansi"},{"n":"3782","m":"Khesya Putri Rahayu","k":"X AKL","j":"Akuntansi"},{"n":"3783","m":"Lisa Apriliyani","k":"X AKL","j":"Akuntansi"},{"n":"3784","m":"Mahira Soleha","k":"X AKL","j":"Akuntansi"},{"n":"3785","m":"Marfuah Salsabila","k":"X AKL","j":"Akuntansi"},{"n":"3786","m":"Masezi Difa Natasya","k":"X AKL","j":"Akuntansi"},{"n":"3960","m":"Muhammad Fajar","k":"X AKL","j":"Akuntansi"},{"n":"3787","m":"Nayla Rahmadani","k":"X AKL","j":"Akuntansi"},{"n":"3788","m":"Nayla Tri Auliya Azzahra","k":"X AKL","j":"Akuntansi"},{"n":"3789","m":"Nestha Febiola","k":"X AKL","j":"Akuntansi"},{"n":"3790","m":"Rani Eka Pramudita","k":"X AKL","j":"Akuntansi"},{"n":"3791","m":"Selly Aprilliya","k":"X AKL","j":"Akuntansi"},{"n":"3792","m":"Septi Hana Pertiwi","k":"X AKL","j":"Akuntansi"},{"n":"3793","m":"Silvi","k":"X AKL","j":"Akuntansi"},{"n":"3794","m":"Sinta Safira","k":"X AKL","j":"Akuntansi"},{"n":"3795","m":"Syahfira Verlyen Nanditha","k":"X AKL","j":"Akuntansi"},{"n":"3796","m":"Syaira","k":"X AKL","j":"Akuntansi"},{"n":"3781","m":"Zessica Febbry Yanti","k":"X AKL","j":"Akuntansi"},{"n":"3797","m":"Abid Khubba Rohman","k":"X PM 1","j":"Pemasaran"},{"n":"3798","m":"Al Patan Rian Pratama","k":"X PM 1","j":"Pemasaran"},{"n":"3799","m":"Alif Ibrohim","k":"X PM 1","j":"Pemasaran"},{"n":"3800","m":"Andika Pratama","k":"X PM 1","j":"Pemasaran"},{"n":"3801","m":"Anisya Dwi Safitri","k":"X PM 1","j":"Pemasaran"},{"n":"3802","m":"Avrillya","k":"X PM 1","j":"Pemasaran"},{"n":"3803","m":"Bayu Adam Saputra","k":"X PM 1","j":"Pemasaran"},{"n":"3804","m":"Desi Aulia Fitri","k":"X PM 1","j":"Pemasaran"},{"n":"3805","m":"Dewi Citra Lestari","k":"X PM 1","j":"Pemasaran"},{"n":"3806","m":"Dimas Pratama","k":"X PM 1","j":"Pemasaran"},{"n":"3807","m":"Diva Anggraini","k":"X PM 1","j":"Pemasaran"},{"n":"3808","m":"Erisya Novita Anggi","k":"X PM 1","j":"Pemasaran"},{"n":"3809","m":"Haykal Reza Indriansyah","k":"X PM 1","j":"Pemasaran"},{"n":"3810","m":"Ica Rahmadhani","k":"X PM 1","j":"Pemasaran"},{"n":"3811","m":"Kamelia Zahro","k":"X PM 1","j":"Pemasaran"},{"n":"3812","m":"M. Farel Pratono","k":"X PM 1","j":"Pemasaran"},{"n":"3813","m":"Marsa Auliya","k":"X PM 1","j":"Pemasaran"},{"n":"3814","m":"Muhamad Al Farizky Maulana","k":"X PM 1","j":"Pemasaran"},{"n":"3815","m":"Nadia Fawzia","k":"X PM 1","j":"Pemasaran"},{"n":"3816","m":"Nazhwa Khairani Putri","k":"X PM 1","j":"Pemasaran"},{"n":"3817","m":"Nur Allansah","k":"X PM 1","j":"Pemasaran"},{"n":"3819","m":"Rycko Saputra","k":"X PM 1","j":"Pemasaran"},{"n":"3820","m":"Sesa Kania Okta Viani","k":"X PM 1","j":"Pemasaran"},{"n":"3821","m":"Steven Ragha Giyazi Hencauwes","k":"X PM 1","j":"Pemasaran"},{"n":"3822","m":"Umi Fadillah Rahmadani","k":"X PM 1","j":"Pemasaran"},{"n":"3823","m":"Zahrin Olivia Putri","k":"X PM 1","j":"Pemasaran"},{"n":"3824","m":"Adil","k":"X PM 2","j":"Pemasaran"},{"n":"3825","m":"Aldi Vega Ramadhan","k":"X PM 2","j":"Pemasaran"},{"n":"3826","m":"Alip Alpiyas Saputra","k":"X PM 2","j":"Pemasaran"},{"n":"3827","m":"Andini","k":"X PM 2","j":"Pemasaran"},{"n":"3828","m":"Astri Rahma Karimah","k":"X PM 2","j":"Pemasaran"},{"n":"3829","m":"Ayu Nur Malasari","k":"X PM 2","j":"Pemasaran"},{"n":"3830","m":"Bayu Saputra","k":"X PM 2","j":"Pemasaran"},{"n":"3831","m":"Destri Purnamasari","k":"X PM 2","j":"Pemasaran"},{"n":"3832","m":"Dewi Tri Rahmadani","k":"X PM 2","j":"Pemasaran"},{"n":"3833","m":"Dinda Ayu Panca","k":"X PM 2","j":"Pemasaran"},{"n":"3834","m":"Elisa Agustin","k":"X PM 2","j":"Pemasaran"},{"n":"3835","m":"Fahrully Bima Putra","k":"X PM 2","j":"Pemasaran"},{"n":"3836","m":"Hikmatulhaniah","k":"X PM 2","j":"Pemasaran"},{"n":"3837","m":"Imam Nurhadi","k":"X PM 2","j":"Pemasaran"},{"n":"3838","m":"Leo Ramadhani","k":"X PM 2","j":"Pemasaran"},{"n":"3839","m":"M  Firman","k":"X PM 2","j":"Pemasaran"},{"n":"3840","m":"Melinda","k":"X PM 2","j":"Pemasaran"},{"n":"3841","m":"Muhamad Fajar","k":"X PM 2","j":"Pemasaran"},{"n":"3842","m":"Nadia Maharani","k":"X PM 2","j":"Pemasaran"},{"n":"3843","m":"Nesa Kinanti","k":"X PM 2","j":"Pemasaran"},{"n":"3844","m":"Olivia Fitriyani","k":"X PM 2","j":"Pemasaran"},{"n":"3845","m":"Rio Aldyansyah","k":"X PM 2","j":"Pemasaran"},{"n":"3846","m":"Sella Rospati","k":"X PM 2","j":"Pemasaran"},{"n":"3847","m":"Sheylla Novischa Rachma","k":"X PM 2","j":"Pemasaran"},{"n":"3848","m":"Tarisa Destaria","k":"X PM 2","j":"Pemasaran"},{"n":"3849","m":"Vanesa Adelia","k":"X PM 2","j":"Pemasaran"},{"n":"3850","m":"Zaki Octa Saifuddin","k":"X PM 2","j":"Pemasaran"},{"n":"3851","m":"Aini Putri Ramadani","k":"X PM 3","j":"Pemasaran"},{"n":"3852","m":"Alia Sari","k":"X PM 3","j":"Pemasaran"},{"n":"3853","m":"Amelda Putri Aprilia","k":"X PM 3","j":"Pemasaran"},{"n":"3854","m":"Andi Saputra","k":"X PM 3","j":"Pemasaran"},{"n":"3855","m":"Angellina Puspita Ulandari","k":"X PM 3","j":"Pemasaran"},{"n":"3856","m":"Aulia Marta Lorensia Purba","k":"X PM 3","j":"Pemasaran"},{"n":"3857","m":"Banu Dwi Erlangga","k":"X PM 3","j":"Pemasaran"},{"n":"3858","m":"Delia Felicia Afinanessa","k":"X PM 3","j":"Pemasaran"},{"n":"3859","m":"Devhara Agtha Pratama","k":"X PM 3","j":"Pemasaran"},{"n":"3860","m":"Dhannis Fahrezi","k":"X PM 3","j":"Pemasaran"},{"n":"3861","m":"Dinda Lestari","k":"X PM 3","j":"Pemasaran"},{"n":"3862","m":"Erfan Fadhillah","k":"X PM 3","j":"Pemasaran"},{"n":"3863","m":"Habibie Putra Kencana","k":"X PM 3","j":"Pemasaran"},{"n":"3864","m":"Hilal An-Nashir","k":"X PM 3","j":"Pemasaran"},{"n":"3865","m":"Julia Saputri","k":"X PM 3","j":"Pemasaran"},{"n":"3867","m":"Maharani Maulidina","k":"X PM 3","j":"Pemasaran"},{"n":"3868","m":"Mifta Ayu Lestari","k":"X PM 3","j":"Pemasaran"},{"n":"3866","m":"Muhammad Abdha Faiz","k":"X PM 3","j":"Pemasaran"},{"n":"3869","m":"Muhammad Ilham","k":"X PM 3","j":"Pemasaran"},{"n":"3870","m":"Nandya Amelisya","k":"X PM 3","j":"Pemasaran"},{"n":"3871","m":"Noviza Bela","k":"X PM 3","j":"Pemasaran"},{"n":"3872","m":"Rafli Pratama","k":"X PM 3","j":"Pemasaran"},{"n":"3873","m":"Rudi Irawan","k":"X PM 3","j":"Pemasaran"},{"n":"3874","m":"Sendi Prayoga","k":"X PM 3","j":"Pemasaran"},{"n":"3875","m":"Sindu Erlangga","k":"X PM 3","j":"Pemasaran"},{"n":"3876","m":"Tri Yulia Sari","k":"X PM 3","j":"Pemasaran"},{"n":"3877","m":"Yulita Noviyanti","k":"X PM 3","j":"Pemasaran"},{"n":"3879","m":"Alip Maulana","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3962","m":"Andika Rian Saputra","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3880","m":"Arya Wijaya","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3881","m":"Bagas Raditya Pratama","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3882","m":"Clarita Rara K","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3883","m":"Dava Kurniawan","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3884","m":"Desta Aditya Sheva","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3885","m":"Dio Pratama","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3887","m":"Fa'Iz Fabari Ahmad","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3886","m":"Fais Abdi Pratama","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3888","m":"Febry Valentino","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3889","m":"Ilham Rizky Pratama","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3890","m":"Khasa Alfarizi","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3892","m":"M Rafa Andika Pratama","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3891","m":"M. Alfariji Ferdiyansyah","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3893","m":"Muhamad Rifai","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3894","m":"Muhammad Andi","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3895","m":"Muhammad Fajar Faiz","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3896","m":"Muhammad Kodri","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3897","m":"Nova Alvino","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3898","m":"Rafa Kurnawan","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3899","m":"Revan Ardiyansyah","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3900","m":"Rico Rivandi","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3901","m":"Rizky Wahyuda","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3902","m":"Satria Aditia","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3903","m":"Syah Prihatini","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3904","m":"Tiar Palwaguna","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3905","m":"Wilga Taufik Rahman","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3906","m":"Zidan Alif Maulana","k":"X TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3907","m":"Ahmad Fiki Saputra","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3908","m":"Andri Adriansyah","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3909","m":"Avicko Rasha","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3910","m":"Davi Arya Rahmadan","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3911","m":"Dhani Desnizar","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3912","m":"Fabian Ahmad Dinata","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3913","m":"Fais Kusnaidi","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3914","m":"Farrij Stianto","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3915","m":"Ifan Adil Irwanto","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3916","m":"Kelvin Ramadani","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3918","m":"M. Galih Pratama","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3917","m":"M. Zikri","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3919","m":"Ma'Arifudin","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3920","m":"Muhammad Alif- Al Fahri","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3921","m":"Muhammad Dhani Alfiansyah","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3922","m":"Muhammad Iansen Zibransah","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3923","m":"Nazril Ilham Maulana","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3925","m":"Rafa Andika Pratama","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3926","m":"Raffa","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3927","m":"Ragil Adzhani","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3928","m":"Raka Agustino","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3929","m":"Rendi Setiawan","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3931","m":"Rizky Fadhilah","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3930","m":"Rizky Jowan Pratama","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3932","m":"Sidik Purnama","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3933","m":"Syamananta Raditya Rizki","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3934","m":"Vri Ramadani","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3935","m":"Zacky Aufa Prasetia","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3937","m":"Alisah Irawati","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3938","m":"Aliva Aura","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3939","m":"Alvina Damaiyanti","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3940","m":"Ananda Putra Pratama","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3936","m":"Ariska Novita","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3959","m":"Berly Alfario","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3941","m":"Estri Alini","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3942","m":"Galih Subhekti","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3943","m":"Intan Jesica Angrainy","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3944","m":"Krisna Maulana","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3945","m":"Latifahtun Hanifah","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3946","m":"Muhammad Afkar Rofzhi","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3947","m":"Muhammad Dennis Anantha","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3948","m":"Nike Febriyanti","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3949","m":"Nurvita Amelia","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3950","m":"Razka Arielias Hartawan","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3951","m":"Reihan Muhamad Pratama","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3952","m":"Selvi Yana Dewi","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3953","m":"Shinta Novalia","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3954","m":"Shyva Hanum Linzani","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3955","m":"Sifa Suci Duwi Ariyanti","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3956","m":"Siva Aulia","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3957","m":"Syahrul Adzkar","k":"X TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3740","m":"Ahmad Fadil","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3741","m":"Aldo Firmansyah","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3742","m":"Alfataher Bagus Junanda","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3468","m":"Andre Oktarianto","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3469","m":"Ansyafela Falencia","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3470","m":"Aqsal Al Haris","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3471","m":"Aqso Yunus","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3472","m":"Arga Dinata","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3474","m":"Bella Apri Liyani","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3475","m":"Cinta Armalia Putri","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3476","m":"Dafa Alfaroh","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3477","m":"Dhaffi Aryansyah Alkhafidz","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3478","m":"Dian Ayu Lestari","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3744","m":"Fadhly Dwi Saputra","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3479","m":"Fahri Dwi Nurrahman","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3480","m":"Farel Kurniawan","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3481","m":"Fathin Arga Pratama","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3482","m":"Fattan Ibnu Syaifudin","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3484","m":"Julian Ibnu Aji","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3488","m":"M Raafi Rizkiano","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3485","m":"M. Daffa Asidik","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3487","m":"M. Gibran Al Fatar","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3489","m":"Maulidya Khoirunnisa","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3490","m":"May Ma'Ruf Aldiansyah","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3486","m":"Muhammad Fahri Ramadan","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3491","m":"Nur Hafifah","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3492","m":"Pratama Anjas Febriyansyah","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3494","m":"Rama Alfareza","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3495","m":"Rasya Finanda","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3497","m":"Reyhand Aldo Saputra","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3498","m":"Tania Juliana","k":"XI TKJ","j":"Teknik Komputer Jaringan"},{"n":"3500","m":"Adisti Khoiruna Nisa","k":"XI AKL","j":"Akuntansi"},{"n":"3501","m":"Alifa Ariani Isbachi","k":"XI AKL","j":"Akuntansi"},{"n":"3502","m":"Alya Anggraini Putri","k":"XI AKL","j":"Akuntansi"},{"n":"3503","m":"Amelia Putri Kamadhanti","k":"XI AKL","j":"Akuntansi"},{"n":"3504","m":"Ananda Agistina","k":"XI AKL","j":"Akuntansi"},{"n":"3505","m":"Anggun Pratiwi","k":"XI AKL","j":"Akuntansi"},{"n":"3506","m":"Aura Rafisha Cahyani","k":"XI AKL","j":"Akuntansi"},{"n":"3507","m":"Belka Syafitri","k":"XI AKL","j":"Akuntansi"},{"n":"3508","m":"Chika Raeyfeva Febiola","k":"XI AKL","j":"Akuntansi"},{"n":"3510","m":"Dwi Nurul Putri","k":"XI AKL","j":"Akuntansi"},{"n":"3511","m":"Erlin Noventy Welly","k":"XI AKL","j":"Akuntansi"},{"n":"3512","m":"Hallimatussyadiyah","k":"XI AKL","j":"Akuntansi"},{"n":"3513","m":"I Gusti Feby Wulandari","k":"XI AKL","j":"Akuntansi"},{"n":"3515","m":"Julyani Cahaya Eka Putri","k":"XI AKL","j":"Akuntansi"},{"n":"3516","m":"Kayla Khoirunisya","k":"XI AKL","j":"Akuntansi"},{"n":"3517","m":"Keyla Anggraini","k":"XI AKL","j":"Akuntansi"},{"n":"3518","m":"Kheisya Anisa Salsabila","k":"XI AKL","j":"Akuntansi"},{"n":"3519","m":"Kikan Herlina Anggraini","k":"XI AKL","j":"Akuntansi"},{"n":"3520","m":"Lit Zeny Banjarnahor","k":"XI AKL","j":"Akuntansi"},{"n":"3521","m":"M. Sandi Pratama","k":"XI AKL","j":"Akuntansi"},{"n":"3522","m":"May Shelia Juliati","k":"XI AKL","j":"Akuntansi"},{"n":"3523","m":"Naifa Ufaira","k":"XI AKL","j":"Akuntansi"},{"n":"3524","m":"Nelsha Aprilia","k":"XI AKL","j":"Akuntansi"},{"n":"3525","m":"Nesya Aurel Medina Putri","k":"XI AKL","j":"Akuntansi"},{"n":"3526","m":"Ninda Mutia Suci","k":"XI AKL","j":"Akuntansi"},{"n":"3527","m":"Novia Zalianty","k":"XI AKL","j":"Akuntansi"},{"n":"3528","m":"Putri Yuliani","k":"XI AKL","j":"Akuntansi"},{"n":"3529","m":"Ririn Aulia","k":"XI AKL","j":"Akuntansi"},{"n":"3530","m":"Riski Rahmawati","k":"XI AKL","j":"Akuntansi"},{"n":"3531","m":"Salsabila Tanisa Gelsi","k":"XI AKL","j":"Akuntansi"},{"n":"3532","m":"Sindi Afriyani","k":"XI AKL","j":"Akuntansi"},{"n":"3533","m":"Sisilia Siren Kuaini","k":"XI AKL","j":"Akuntansi"},{"n":"3534","m":"Vivi Marissa Agustina Ramadhani","k":"XI AKL","j":"Akuntansi"},{"n":"3535","m":"Zhaskya Aulia Putri","k":"XI AKL","j":"Akuntansi"},{"n":"3536","m":"Adeli Safitri","k":"XI PM 1","j":"Pemasaran"},{"n":"3537","m":"Agis Aulia Olanda","k":"XI PM 1","j":"Pemasaran"},{"n":"3538","m":"Albani Farista","k":"XI PM 1","j":"Pemasaran"},{"n":"3539","m":"Aulia Loratifah","k":"XI PM 1","j":"Pemasaran"},{"n":"3540","m":"Aura Meilani","k":"XI PM 1","j":"Pemasaran"},{"n":"3541","m":"Azis Pratama","k":"XI PM 1","j":"Pemasaran"},{"n":"3542","m":"Celse Olivia","k":"XI PM 1","j":"Pemasaran"},{"n":"3543","m":"Chalysta Aulia Zahrani","k":"XI PM 1","j":"Pemasaran"},{"n":"3544","m":"Defi Intan Permata Sari","k":"XI PM 1","j":"Pemasaran"},{"n":"3545","m":"Dian Sukmawati","k":"XI PM 1","j":"Pemasaran"},{"n":"3546","m":"Diva Amelia Resita","k":"XI PM 1","j":"Pemasaran"},{"n":"3547","m":"Echa Viana Putri","k":"XI PM 1","j":"Pemasaran"},{"n":"3548","m":"Echi Viani Putri","k":"XI PM 1","j":"Pemasaran"},{"n":"3549","m":"Emo Aldian","k":"XI PM 1","j":"Pemasaran"},{"n":"3550","m":"Fabian Ega Gunanda","k":"XI PM 1","j":"Pemasaran"},{"n":"3551","m":"Herlina Tridewi","k":"XI PM 1","j":"Pemasaran"},{"n":"3552","m":"Ilham Agam Fadira","k":"XI PM 1","j":"Pemasaran"},{"n":"3553","m":"Irma Septiana","k":"XI PM 1","j":"Pemasaran"},{"n":"3514","m":"Juliya Amelia","k":"XI PM 1","j":"Pemasaran"},{"n":"3554","m":"Juliya Aviani","k":"XI PM 1","j":"Pemasaran"},{"n":"3555","m":"Keysa Vanya Nabilla","k":"XI PM 1","j":"Pemasaran"},{"n":"3557","m":"Luvina Aulia","k":"XI PM 1","j":"Pemasaran"},{"n":"3556","m":"Lyra Pirna","k":"XI PM 1","j":"Pemasaran"},{"n":"3558","m":"Novita Sari","k":"XI PM 1","j":"Pemasaran"},{"n":"3559","m":"Nur Laila Fathul Jannah","k":"XI PM 1","j":"Pemasaran"},{"n":"3560","m":"Nurul Safitri","k":"XI PM 1","j":"Pemasaran"},{"n":"3561","m":"Putra Rahmadani","k":"XI PM 1","j":"Pemasaran"},{"n":"3562","m":"Putri Silvia","k":"XI PM 1","j":"Pemasaran"},{"n":"3563","m":"Reffy Alviano","k":"XI PM 1","j":"Pemasaran"},{"n":"3564","m":"Revina Billah Yusriyyah","k":"XI PM 1","j":"Pemasaran"},{"n":"3565","m":"Rhentania Zhafirazhelila","k":"XI PM 1","j":"Pemasaran"},{"n":"3566","m":"Risky Aditiya","k":"XI PM 1","j":"Pemasaran"},{"n":"3567","m":"Septi Aulia Safitri","k":"XI PM 1","j":"Pemasaran"},{"n":"3569","m":"Vika Ayu Putri","k":"XI PM 1","j":"Pemasaran"},{"n":"3570","m":"Widiya Ningsih","k":"XI PM 1","j":"Pemasaran"},{"n":"3571","m":"Affan Ramadan","k":"XI PM 2","j":"Pemasaran"},{"n":"3572","m":"Alicia Kirani Putri","k":"XI PM 2","j":"Pemasaran"},{"n":"3573","m":"Arby Ardentia","k":"XI PM 2","j":"Pemasaran"},{"n":"3574","m":"Aulia Elena","k":"XI PM 2","j":"Pemasaran"},{"n":"3575","m":"Bunga Lestari","k":"XI PM 2","j":"Pemasaran"},{"n":"3576","m":"Cessya Regita Cahyani","k":"XI PM 2","j":"Pemasaran"},{"n":"3577","m":"Chika Melani Arina Putri","k":"XI PM 2","j":"Pemasaran"},{"n":"3579","m":"Dewi Kurniasih","k":"XI PM 2","j":"Pemasaran"},{"n":"3580","m":"Dia Novita","k":"XI PM 2","j":"Pemasaran"},{"n":"3578","m":"Distiy Permata Sari","k":"XI PM 2","j":"Pemasaran"},{"n":"3581","m":"Dzakyyah Rohadatul Aisy","k":"XI PM 2","j":"Pemasaran"},{"n":"3582","m":"Ervina Aprilia","k":"XI PM 2","j":"Pemasaran"},{"n":"3583","m":"Fahri Dian Pratama","k":"XI PM 2","j":"Pemasaran"},{"n":"3584","m":"Fio Angella","k":"XI PM 2","j":"Pemasaran"},{"n":"3586","m":"Ilham Saputra","k":"XI PM 2","j":"Pemasaran"},{"n":"3587","m":"Kgs. M. Faris Kurniawan","k":"XI PM 2","j":"Pemasaran"},{"n":"3588","m":"Lailatussa'Adah","k":"XI PM 2","j":"Pemasaran"},{"n":"3589","m":"Mifta Ulsifa Fauziah","k":"XI PM 2","j":"Pemasaran"},{"n":"3590","m":"Muhamad Farid Ardiansyah","k":"XI PM 2","j":"Pemasaran"},{"n":"3591","m":"Nia Dwi Safitri","k":"XI PM 2","j":"Pemasaran"},{"n":"3592","m":"Nur Bela Sari","k":"XI PM 2","j":"Pemasaran"},{"n":"3593","m":"Nurfa Syafa Az-Zahra","k":"XI PM 2","j":"Pemasaran"},{"n":"3594","m":"Nyi Ayu Zahra Safira J","k":"XI PM 2","j":"Pemasaran"},{"n":"3595","m":"Oktaviani","k":"XI PM 2","j":"Pemasaran"},{"n":"3596","m":"Raka Dimas Pramudya","k":"XI PM 2","j":"Pemasaran"},{"n":"3597","m":"Rasya Apriliyandika","k":"XI PM 2","j":"Pemasaran"},{"n":"3598","m":"Renita Auliya","k":"XI PM 2","j":"Pemasaran"},{"n":"3599","m":"Rifki Aditya Pratama","k":"XI PM 2","j":"Pemasaran"},{"n":"3600","m":"Saskia Anjani","k":"XI PM 2","j":"Pemasaran"},{"n":"3601","m":"Siti Aniah","k":"XI PM 2","j":"Pemasaran"},{"n":"3602","m":"Syifa Khairillah","k":"XI PM 2","j":"Pemasaran"},{"n":"3603","m":"Ulviani Rahmawati Mk","k":"XI PM 2","j":"Pemasaran"},{"n":"3604","m":"Verlita Adya Mecca","k":"XI PM 2","j":"Pemasaran"},{"n":"3605","m":"Wulan Sari","k":"XI PM 2","j":"Pemasaran"},{"n":"3606","m":"Adinda Arra Fina Nurlaila","k":"XI PM 3","j":"Pemasaran"},{"n":"3607","m":"Andika Alfiansah","k":"XI PM 3","j":"Pemasaran"},{"n":"3608","m":"Arya Pangestu","k":"XI PM 3","j":"Pemasaran"},{"n":"3609","m":"Ayu Pramudya Wardhany","k":"XI PM 3","j":"Pemasaran"},{"n":"3610","m":"Claudia Cintia Bella","k":"XI PM 3","j":"Pemasaran"},{"n":"3611","m":"Delfy Alya Azizah Gunisty","k":"XI PM 3","j":"Pemasaran"},{"n":"3612","m":"Diah Ayu Lestari","k":"XI PM 3","j":"Pemasaran"},{"n":"3613","m":"Dika Setiawan","k":"XI PM 3","j":"Pemasaran"},{"n":"3614","m":"Eca Ramadhani","k":"XI PM 3","j":"Pemasaran"},{"n":"3615","m":"Ervan Rahmadani","k":"XI PM 3","j":"Pemasaran"},{"n":"3616","m":"Fauzan Ahmad Afandi","k":"XI PM 3","j":"Pemasaran"},{"n":"3617","m":"Ikhrar Pratama","k":"XI PM 3","j":"Pemasaran"},{"n":"3618","m":"Intan Nuraini","k":"XI PM 3","j":"Pemasaran"},{"n":"3619","m":"Irma Trimulyani","k":"XI PM 3","j":"Pemasaran"},{"n":"3620","m":"Khairunningtyas","k":"XI PM 3","j":"Pemasaran"},{"n":"3621","m":"Lili Jelita Azzahra","k":"XI PM 3","j":"Pemasaran"},{"n":"3622","m":"Maya Aulia","k":"XI PM 3","j":"Pemasaran"},{"n":"3743","m":"Mujihan Nur Intan","k":"XI PM 3","j":"Pemasaran"},{"n":"3623","m":"Nabilla Mutia Dinata","k":"XI PM 3","j":"Pemasaran"},{"n":"3624","m":"Nasya Alfira","k":"XI PM 3","j":"Pemasaran"},{"n":"3625","m":"Nila Kusuma Dewi","k":"XI PM 3","j":"Pemasaran"},{"n":"3626","m":"Nova Adelia Sabila","k":"XI PM 3","j":"Pemasaran"},{"n":"3628","m":"Okta Rina Wulandari","k":"XI PM 3","j":"Pemasaran"},{"n":"3629","m":"Puput Maisahrani","k":"XI PM 3","j":"Pemasaran"},{"n":"3630","m":"Putri Rahmasari","k":"XI PM 3","j":"Pemasaran"},{"n":"3631","m":"Raffa Algi Firmansyah","k":"XI PM 3","j":"Pemasaran"},{"n":"3632","m":"Rani Putri Alika","k":"XI PM 3","j":"Pemasaran"},{"n":"3633","m":"Regita Dewi Cahaya","k":"XI PM 3","j":"Pemasaran"},{"n":"3635","m":"Rizki Salma Januari","k":"XI PM 3","j":"Pemasaran"},{"n":"3636","m":"Salsa Mareta Zuliyan","k":"XI PM 3","j":"Pemasaran"},{"n":"3637","m":"Shela Olivia","k":"XI PM 3","j":"Pemasaran"},{"n":"3638","m":"Trias Rita Sesillia","k":"XI PM 3","j":"Pemasaran"},{"n":"3639","m":"Verdi Trinata","k":"XI PM 3","j":"Pemasaran"},{"n":"3640","m":"Afgan Kaka Muchlisin","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3641","m":"Ahmad Yusuf Maulana Fahreza","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3642","m":"Akbar Sigit Pratama","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3644","m":"Albar Perliandi","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3645","m":"Anas Maghruf","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3646","m":"Andrawan Suriz Pratama","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3682","m":"Arya Setiawan","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3647","m":"Bagus Fitra Ramadhan","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3649","m":"Farel Valentino","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3650","m":"Febri Setiawan","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3651","m":"Gathan Raptama Praja Pulungan","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3652","m":"Ikhsan Jelang Rahmadani","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3654","m":"Ivanggi Cahya Putri","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3655","m":"Kaya Muddin Harahap","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3656","m":"Lutfi Aditya","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3657","m":"M Andrian Rahmadani","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3659","m":"Muhamad Arief Alfaqih","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3660","m":"Muhamad Toriq Ardiyansah","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3661","m":"Muhammad Ibnu Rafi","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3662","m":"Nazriel Yoriansyah","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3663","m":"Prima Aprilio","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3664","m":"Putra Pratama","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3665","m":"Rafael Nugraha","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3666","m":"Rangga Aprinal","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3667","m":"Reno Ardiyansyah","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3668","m":"Ridho Prasetya","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3669","m":"Rifai Ridwan Pratama","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3670","m":"Rifky Alamsyah","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3671","m":"Rizky Aditia Pratama","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3672","m":"Wahyu Hidayah","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3673","m":"Yos Rinno Sekti Wijaksono","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3674","m":"Yudha Adi Prayitno","k":"XI TKR 1","j":"Teknik Kendaraan Ringan"},{"n":"3675","m":"Aditya Pratama","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3677","m":"Akhmad Yusuf","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3678","m":"Alief Prayoga","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3680","m":"Amru Saleh Algusminas","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3681","m":"Ar. Rafi Pratama","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3685","m":"Cory Armadigta","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3686","m":"Deni Chandra","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3687","m":"Dimas Saputra","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3688","m":"Doni Irwansyah","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3689","m":"Faisal Ardiansyah","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3690","m":"Farel Pareja","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3691","m":"Ferdiyan Andika Pratama","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3693","m":"Hafis Firdaus","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3692","m":"Hafit Hanafi","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3694","m":"Imran Saputra","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3695","m":"Leo Nurhidayat","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3696","m":"Lucky Ramadhan","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3697","m":"M. Fachri Alhafis","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3700","m":"Muhamad Reyhan Saputra","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3698","m":"Muhammad Afi","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3699","m":"Muhammad Oktorista","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3701","m":"Muhammad Taufik Ismanto","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3705","m":"Raehan Alvinno","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3703","m":"Rama Danis","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3704","m":"Ramdani","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3706","m":"Reno Hariawan","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3708","m":"Rizky Ahmad Bendy","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3710","m":"Ade Tia","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3711","m":"Ahmad Ainand Fitrah","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3712","m":"Aldino Fajarwoko","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3713","m":"Amanda Tri Cahayati","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3714","m":"Ananda Pratama","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3715","m":"Anom Saputra","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3716","m":"Aqnes Isnaini","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3717","m":"Ardina Cahya Kinanti","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3718","m":"Aska Septia Rahmandani","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3720","m":"Dwi Aryanti","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3721","m":"Eka Nurvita Sari","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3723","m":"Hafiz Cesarqurohman","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3724","m":"Hafiz Khadafi","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3725","m":"Hoiru Tijani","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3726","m":"M. Hafidz Dhio Zaidan","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3727","m":"Masayu Saskia Ramadhani","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3728","m":"Maulana Akbar Setiawan","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3729","m":"Mustaqim Ramadani","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3730","m":"Nadela Adinda Putri","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3731","m":"Nasya Aurelia Pratiwi","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3732","m":"Nazla Lenita Rhea","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3733","m":"Radin Rajawali Ramadhan Wijaya","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3734","m":"Reva Dea Ananda Putri","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3735","m":"Riska Sahara Putri","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3736","m":"Rizky Kurniawan","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3737","m":"Sasi Putri Saskia","k":"XI TKR 2","j":"Teknik Kendaraan Ringan"},{"n":"3339","m":"Amanda Sekar Wangi","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3459","m":"Arga Rezki Febrian","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3242","m":"Cahaya Fitria Sari","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3244","m":"Damar Nur Fauzan","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3245","m":"Dava Rizki Alfian","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3246","m":"Debi Alisia Saputri","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3247","m":"Fahri Ardian","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3248","m":"Haikal Rahmat","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3249","m":"Heny Handayani","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3250","m":"Indal Irawan","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3251","m":"Jimmy Fernando Putra","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3252","m":"Kayla Maharani","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3253","m":"Kiara Salsabilla","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3254","m":"Laskar Dikjaya","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3458","m":"Mizar Repaldo","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3255","m":"Mohammad Arief Maulana","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3257","m":"Muhammad Amir","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3259","m":"Muhammad Sopian","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3260","m":"Muhammad Umar","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3261","m":"Nazwatun Nurrul Inayah","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3262","m":"Pariskha Indria Rohma","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3265","m":"Rifki Ega Pratama","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3266","m":"Riyanti Adzra Hanifah","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3267","m":"Sammud Al Fauzi","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3268","m":"Sandhi Firdaus","k":"XII TKJ","j":"Teknik Komputer Jaringan"},{"n":"3270","m":"Adinda Putri Salsabila","k":"XII AKL","j":"Akuntansi"},{"n":"3272","m":"Anas Miftahudin","k":"XII AKL","j":"Akuntansi"},{"n":"3273","m":"Anggi Masitoh","k":"XII AKL","j":"Akuntansi"},{"n":"3274","m":"Annisa Cahya Karmila Pratiwi","k":"XII AKL","j":"Akuntansi"},{"n":"3275","m":"Asti Ambarwati","k":"XII AKL","j":"Akuntansi"},{"n":"3276","m":"Ayu Anggani","k":"XII AKL","j":"Akuntansi"},{"n":"3278","m":"Devita Eka Febryanti","k":"XII AKL","j":"Akuntansi"},{"n":"3279","m":"Eka Gusti Putri","k":"XII AKL","j":"Akuntansi"},{"n":"3280","m":"Elsa Salsabila","k":"XII AKL","j":"Akuntansi"},{"n":"3281","m":"Elsana Tujuh","k":"XII AKL","j":"Akuntansi"},{"n":"3284","m":"Fitri Dwi Putri","k":"XII AKL","j":"Akuntansi"},{"n":"3285","m":"Hafid Yuki Syah Yuza","k":"XII AKL","j":"Akuntansi"},{"n":"3286","m":"Ica Defara","k":"XII AKL","j":"Akuntansi"},{"n":"3287","m":"Ika Julia","k":"XII AKL","j":"Akuntansi"},{"n":"3288","m":"Imelda Maharani","k":"XII AKL","j":"Akuntansi"},{"n":"3289","m":"Kaneza Marvell Oryenta Hencouwes","k":"XII AKL","j":"Akuntansi"},{"n":"3291","m":"Melisya Rahmawati","k":"XII AKL","j":"Akuntansi"},{"n":"3292","m":"Nazhala Almira","k":"XII AKL","j":"Akuntansi"},{"n":"3293","m":"Rahma Arum Puspita Sari","k":"XII AKL","j":"Akuntansi"},{"n":"3294","m":"Regi Yuda Pratama","k":"XII AKL","j":"Akuntansi"},{"n":"3295","m":"Renata Desta Aurelia","k":"XII AKL","j":"Akuntansi"},{"n":"3296","m":"Risma Fitria","k":"XII AKL","j":"Akuntansi"},{"n":"3297","m":"Shireen Puspita Three Arianto","k":"XII AKL","j":"Akuntansi"},{"n":"3298","m":"Siti Amelia","k":"XII AKL","j":"Akuntansi"},{"n":"3299","m":"Sopi Indarwan","k":"XII AKL","j":"Akuntansi"},{"n":"3300","m":"Vatya Jihan Safitri","k":"XII AKL","j":"Akuntansi"},{"n":"3302","m":"Zaifa Kirara","k":"XII AKL","j":"Akuntansi"},{"n":"3303","m":"Adhitya Fajar Ramadhani","k":"XII PM 1","j":"Pemasaran"},{"n":"3304","m":"Ahmad Febiyan Vijayanto","k":"XII PM 1","j":"Pemasaran"},{"n":"3305","m":"Ajeng Sekar Novianti","k":"XII PM 1","j":"Pemasaran"},{"n":"3307","m":"Anggun Agustina","k":"XII PM 1","j":"Pemasaran"},{"n":"3308","m":"Arkianu Malvin Ahimsyah","k":"XII PM 1","j":"Pemasaran"},{"n":"3309","m":"Ayu Apriliya","k":"XII PM 1","j":"Pemasaran"},{"n":"3310","m":"Bayu Satriya","k":"XII PM 1","j":"Pemasaran"},{"n":"3311","m":"Chelsea Dwi Damayanti","k":"XII PM 1","j":"Pemasaran"},{"n":"3313","m":"Delia Anggraini","k":"XII PM 1","j":"Pemasaran"},{"n":"3315","m":"Dian Utami","k":"XII PM 1","j":"Pemasaran"},{"n":"3316","m":"Evi Mellyza","k":"XII PM 1","j":"Pemasaran"},{"n":"3317","m":"Farel Pairus Indrawan. S","k":"XII PM 1","j":"Pemasaran"},{"n":"3318","m":"Fina Riski Nurhayati","k":"XII PM 1","j":"Pemasaran"},{"n":"3320","m":"Januar Hikmah Adjie","k":"XII PM 1","j":"Pemasaran"},{"n":"3321","m":"Kaila Amelia","k":"XII PM 1","j":"Pemasaran"},{"n":"3322","m":"Kinanti Amanda Juliansi","k":"XII PM 1","j":"Pemasaran"},{"n":"3323","m":"M. Rizki Indra Permana","k":"XII PM 1","j":"Pemasaran"},{"n":"3324","m":"Marsila Nur Maulida","k":"XII PM 1","j":"Pemasaran"},{"n":"3325","m":"Meri Septiani","k":"XII PM 1","j":"Pemasaran"},{"n":"3326","m":"Nadia Sifa Yona","k":"XII PM 1","j":"Pemasaran"},{"n":"3327","m":"Nur Indah Sari","k":"XII PM 1","j":"Pemasaran"},{"n":"3328","m":"Rara Amelia","k":"XII PM 1","j":"Pemasaran"},{"n":"3329","m":"Reno Ramadhani","k":"XII PM 1","j":"Pemasaran"},{"n":"3330","m":"Riski M Cahaya","k":"XII PM 1","j":"Pemasaran"},{"n":"3331","m":"Saskia Pratiwi","k":"XII PM 1","j":"Pemasaran"},{"n":"3332","m":"Sherliana Putri","k":"XII PM 1","j":"Pemasaran"},{"n":"3333","m":"Siti Maysaroh","k":"XII PM 1","j":"Pemasaran"},{"n":"3334","m":"Tiara Putri Kinanti","k":"XII PM 1","j":"Pemasaran"},{"n":"3335","m":"Wahyu Aji Saputra","k":"XII PM 1","j":"Pemasaran"},{"n":"3337","m":"Aji Ridwan Mas","k":"XII PM 2","j":"Pemasaran"},{"n":"3338","m":"Alfian Saputra","k":"XII PM 2","j":"Pemasaran"},{"n":"3340","m":"Anis Nurullita","k":"XII PM 2","j":"Pemasaran"},{"n":"3341","m":"Aprizal","k":"XII PM 2","j":"Pemasaran"},{"n":"3342","m":"Aries Adi Pratama","k":"XII PM 2","j":"Pemasaran"},{"n":"3343","m":"Bella Meicha","k":"XII PM 2","j":"Pemasaran"},{"n":"3344","m":"Chelsi Anindita","k":"XII PM 2","j":"Pemasaran"},{"n":"3345","m":"Dava Kurniansyah","k":"XII PM 2","j":"Pemasaran"},{"n":"3347","m":"Devina Dwi Anisa","k":"XII PM 2","j":"Pemasaran"},{"n":"3348","m":"Dimas Sanjaya","k":"XII PM 2","j":"Pemasaran"},{"n":"3350","m":"Farel Putra Pratama","k":"XII PM 2","j":"Pemasaran"},{"n":"3352","m":"Ida Safitri","k":"XII PM 2","j":"Pemasaran"},{"n":"3353","m":"Juliana Sapitri","k":"XII PM 2","j":"Pemasaran"},{"n":"3354","m":"Khirania Geovanny","k":"XII PM 2","j":"Pemasaran"},{"n":"3355","m":"Laras Putri Amelia","k":"XII PM 2","j":"Pemasaran"},{"n":"3356","m":"Maisila Desita Anggraini","k":"XII PM 2","j":"Pemasaran"},{"n":"3357","m":"Marsya Fadila Ramadhani","k":"XII PM 2","j":"Pemasaran"},{"n":"3358","m":"Miftahul Nur Hasanah","k":"XII PM 2","j":"Pemasaran"},{"n":"3359","m":"Nia Ayu Ramadani","k":"XII PM 2","j":"Pemasaran"},{"n":"3360","m":"Putra Sanjaya","k":"XII PM 2","j":"Pemasaran"},{"n":"3361","m":"Reina Febriana","k":"XII PM 2","j":"Pemasaran"},{"n":"3362","m":"Revalina","k":"XII PM 2","j":"Pemasaran"},{"n":"3363","m":"Sabina Alexa","k":"XII PM 2","j":"Pemasaran"},{"n":"3364","m":"Sheila Aulia Ramadhani","k":"XII PM 2","j":"Pemasaran"},{"n":"3365","m":"Shofi Sabila","k":"XII PM 2","j":"Pemasaran"},{"n":"3366","m":"Suci Selpia Ningsih","k":"XII PM 2","j":"Pemasaran"},{"n":"3369","m":"Tiara Putri Wulandari","k":"XII PM 2","j":"Pemasaran"},{"n":"3367","m":"Triyas Vika Yunira","k":"XII PM 2","j":"Pemasaran"},{"n":"3368","m":"Widia Utami","k":"XII PM 2","j":"Pemasaran"},{"n":"3370","m":"Afilia","k":"XII PM 3","j":"Pemasaran"},{"n":"3372","m":"Alfiana","k":"XII PM 3","j":"Pemasaran"},{"n":"3373","m":"Andika Dwi Yanto","k":"XII PM 3","j":"Pemasaran"},{"n":"3374","m":"Apriyola Susanti","k":"XII PM 3","j":"Pemasaran"},{"n":"3377","m":"Carera Siti Nurazizah","k":"XII PM 3","j":"Pemasaran"},{"n":"3378","m":"Cika Sabrina","k":"XII PM 3","j":"Pemasaran"},{"n":"3379","m":"Dea Nanda Naysila","k":"XII PM 3","j":"Pemasaran"},{"n":"3380","m":"Destri Septiyana Wati","k":"XII PM 3","j":"Pemasaran"},{"n":"3381","m":"Dian Febiola","k":"XII PM 3","j":"Pemasaran"},{"n":"3383","m":"Fachri Julian","k":"XII PM 3","j":"Pemasaran"},{"n":"3384","m":"Fina Fisabilah","k":"XII PM 3","j":"Pemasaran"},{"n":"3385","m":"Hilmi Kurniawan","k":"XII PM 3","j":"Pemasaran"},{"n":"3386","m":"Ib'Nu Auffa","k":"XII PM 3","j":"Pemasaran"},{"n":"3387","m":"Juwita Dewi Kusuma Suci Cahyati","k":"XII PM 3","j":"Pemasaran"},{"n":"3388","m":"Khoirul Ma'Arif Azzaki","k":"XII PM 3","j":"Pemasaran"},{"n":"3389","m":"M. Faris Hidayat","k":"XII PM 3","j":"Pemasaran"},{"n":"3390","m":"Marini","k":"XII PM 3","j":"Pemasaran"},{"n":"3391","m":"Melinda","k":"XII PM 3","j":"Pemasaran"},{"n":"3392","m":"Monika Aulia","k":"XII PM 3","j":"Pemasaran"},{"n":"3393","m":"Nur Aisah","k":"XII PM 3","j":"Pemasaran"},{"n":"3394","m":"Rahel Fadilah","k":"XII PM 3","j":"Pemasaran"},{"n":"3396","m":"Ririn Lisnawati","k":"XII PM 3","j":"Pemasaran"},{"n":"3397","m":"Rizki Subekti","k":"XII PM 3","j":"Pemasaran"},{"n":"3398","m":"Safa Azahra","k":"XII PM 3","j":"Pemasaran"},{"n":"3399","m":"Sheila Prastika","k":"XII PM 3","j":"Pemasaran"},{"n":"3400","m":"Singgi Mauliya","k":"XII PM 3","j":"Pemasaran"},{"n":"3401","m":"Surya Rini","k":"XII PM 3","j":"Pemasaran"},{"n":"3402","m":"Vanessa Aprilita Cahyani","k":"XII PM 3","j":"Pemasaran"},{"n":"3403","m":"Zaneta Astianti","k":"XII PM 3","j":"Pemasaran"},{"n":"3404","m":"Abdul Fadil Fahrezi","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3432","m":"Abil Najril Ilham","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3405","m":"Ahmad Aditiya Alfaro","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3433","m":"Akbar Fadilah","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3408","m":"Aldi Riyono","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3434","m":"Ali Mulki","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3435","m":"Alif Fajar Rian","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3436","m":"Andre Agus Setiawan","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3437","m":"Arba Zaky","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3438","m":"Bagoes Setya Gusti","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3413","m":"Danu Ramadan","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3439","m":"David Insani","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3414","m":"Edi Samroni","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3441","m":"Eko Puji Rumawan","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3443","m":"Iqbal Ahmad Mustakim","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3417","m":"Jagat Rifki Julian","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3444","m":"Jaka Yahya","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3445","m":"Kelvin Apriyansyah","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3448","m":"M Rohid Daffaliey","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3418","m":"M. Ardyansah","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3419","m":"M. Fajar Ardiyansah","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3446","m":"M. Hanif Abdurrafi","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3420","m":"Muhammad Fauzan Pratama","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3961","m":"Muhammad Satria","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3421","m":"Nauffal Dzaffrin Yudhistira","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3450","m":"Putri Amelia","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3422","m":"Radit Ardiansyah","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3423","m":"Raehan Febriyansah","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3424","m":"Raka Aditiya","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3451","m":"Raka Faristama","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3452","m":"Rayhan Maulana","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3454","m":"Rizki Juliansyah","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3427","m":"Rizki Prasetyo","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3428","m":"Sigit Setiawan","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3457","m":"Viqi Ade Wijaya","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3430","m":"Yuda Anggara","k":"XII TKR","j":"Teknik Kendaraan Ringan"},{"n":"3431","m":"Zacky Fernando Aldian Syah","k":"XII TKR","j":"Teknik Kendaraan Ringan"}];
 
         // Mock Databases
         const initialJobs = [
@@ -2699,17 +2762,22 @@
                             if (finalStatus === 'disetujui') newStatus = 'approved';
                             else if (finalStatus === 'diajukan') newStatus = 'requested';
                             
+                            const matchedStudent = STUDENT_WHITELIST.find(s => s.n.toString() === row.NISN.toString());
+                            const resolvedTahunLulus = row.TahunLulus || row['Tahun Lulus'] || row['Tahun Kelulusan'] || (matchedStudent ? "2026" : "");
+                            const resolvedWa = row.WA || row['WhatsApp'] || row['No WA'] || "";
+
                             localUsers.push({
                                 name: row.Nama,
                                 email: `alumni-${row.NISN}@smkab.sch.id`,
                                 password: "password123",
                                 nisn: row.NISN.toString(),
                                 jurusan: row.Jurusan,
-                                wa: "",
+                                wa: resolvedWa,
                                 skills: "",
                                 pendidikan: "SMK Amal Bakti Jatimulyo",
                                 pengalaman: "",
-                                printStatus: newStatus
+                                printStatus: newStatus,
+                                tahunLulus: resolvedTahunLulus
                             });
                             changed = true;
                         }
@@ -2902,12 +2970,69 @@
             }
         }
 
+        // NIS verification real-time check
+        function checkNisVerification(nisVal) {
+            const trimmed = nisVal.trim();
+            const badge = document.getElementById('nis-verification-badge');
+            const nameInput = document.getElementById('reg-nama');
+            const majorSelect = document.getElementById('reg-jurusan');
+            const yearSelect = document.getElementById('reg-tahun-lulus');
+
+            if (trimmed.length === 0) {
+                badge.style.display = 'none';
+                nameInput.readOnly = false;
+                majorSelect.disabled = false;
+                yearSelect.disabled = false;
+                return;
+            }
+
+            // Search in STUDENT_WHITELIST
+            const student = STUDENT_WHITELIST.find(s => s.n.toString() === trimmed);
+
+            if (student) {
+                badge.style.display = 'block';
+                badge.style.background = '#d1e7dd';
+                badge.style.color = '#0f5132';
+                badge.style.border = '1px solid #badbcc';
+                badge.innerHTML = `<i class="fa-solid fa-circle-check"></i> Terverifikasi: <strong>${student.m}</strong> (${student.k})`;
+                
+                // Autofill and lock
+                nameInput.value = student.m;
+                nameInput.readOnly = true;
+                
+                // Select matching major in dropdown
+                const options = Array.from(majorSelect.options);
+                const matchingOption = options.find(opt => opt.value.toLowerCase().includes(student.j.toLowerCase()) || student.j.toLowerCase().includes(opt.value.toLowerCase()));
+                if (matchingOption) {
+                    majorSelect.value = matchingOption.value;
+                }
+                majorSelect.disabled = true;
+
+                // Default graduation year for current students is 2026
+                yearSelect.value = "2026";
+                yearSelect.disabled = true;
+            } else {
+                badge.style.display = 'block';
+                badge.style.background = '#fff3cd';
+                badge.style.color = '#664d03';
+                badge.style.border = '1px solid #ffecb5';
+                badge.innerHTML = `<i class="fa-solid fa-circle-info"></i> NIS tidak terdaftar di angkatan aktif 2025/2026. Silakan isi data secara manual.`;
+                
+                // Unlock
+                nameInput.readOnly = false;
+                majorSelect.disabled = false;
+                yearSelect.disabled = false;
+            }
+        }
+
         // Alumni Registration Action
         function handleAlumniRegister(e) {
             e.preventDefault();
             const name = document.getElementById('reg-nama').value.trim();
             const nisn = document.getElementById('reg-nisn').value.trim();
             const jurusan = document.getElementById('reg-jurusan').value;
+            const tahunLulus = document.getElementById('reg-tahun-lulus').value;
+            const wa = document.getElementById('reg-wa').value.trim();
             const email = document.getElementById('reg-email').value.trim();
             const password = document.getElementById('reg-password').value;
 
@@ -2919,13 +3044,19 @@
                 return;
             }
 
+            // Check if NIS already exists
+            if (nisn && users.find(u => u.nisn.toString() === nisn.toString())) {
+                alert("Nomor NIS tersebut sudah terdaftar di sistem!");
+                return;
+            }
+
             const newUser = {
                 name,
                 email,
                 password,
                 nisn,
                 jurusan,
-                wa: "",
+                wa,
                 skills: "",
                 pendidikan: "SMK Amal Bakti Jatimulyo",
                 pengalaman: "",
@@ -2937,16 +3068,25 @@
                 portofolio2Title: "",
                 portofolio2Desc: "",
                 printStatus: "pending", // New users start as pending approval
-                photo: null
+                photo: null,
+                tahunLulus // Simpan Tahun Kelulusan
             };
 
             users.push(newUser);
             localStorage.setItem('bkk_users', JSON.stringify(users));
 
             // Sync with Google Sheets online database
-            sendDataToGoogleSheets('register', { nama: name, nisn: nisn, jurusan: jurusan });
+            sendDataToGoogleSheets('register', { nama: name, nisn: nisn, jurusan: jurusan, wa: wa, tahun_lulus: tahunLulus });
 
             alert("Pendaftaran berhasil! Silakan masuk dengan akun baru Anda.");
+            
+            // Unlock fields before resetting and toggling mode
+            document.getElementById('reg-nama').readOnly = false;
+            document.getElementById('reg-jurusan').disabled = false;
+            document.getElementById('reg-tahun-lulus').disabled = false;
+            document.getElementById('nis-verification-badge').style.display = 'none';
+            document.getElementById('alumni-register-form').reset();
+
             toggleAuthModalMode('login');
             document.getElementById('login-email').value = email;
         }
@@ -2954,21 +3094,37 @@
         // Alumni Login Action
         function handleAlumniLogin(e) {
             e.preventDefault();
-            const email = document.getElementById('login-email').value.trim();
+            const emailInput = document.getElementById('login-email').value.trim();
             const password = document.getElementById('login-password').value;
 
             const users = JSON.parse(localStorage.getItem('bkk_users')) || [];
-            const user = users.find(u => u.email === email && u.password === password);
+            
+            // Cari user berdasarkan email kustom, NISN, atau format email rekonstruksi (alumni-[NISN]@smkab.sch.id)
+            const user = users.find(u => {
+                const cleanEmailInput = emailInput.toLowerCase();
+                const cleanUserEmail = u.email.toLowerCase();
+                const cleanNisn = u.nisn ? u.nisn.toString().trim() : '';
+                const reconstructedEmail = `alumni-${cleanNisn}@smkab.sch.id`.toLowerCase();
+
+                return cleanUserEmail === cleanEmailInput || 
+                       cleanNisn === emailInput || 
+                       reconstructedEmail === cleanEmailInput;
+            });
 
             if (user) {
-                currentAlumni = user;
-                sessionStorage.setItem('current_alumni', JSON.stringify(user));
-                closeLoginModal();
-                updateAuthUiState();
-                switchView('cv');
-                alert("Login berhasil! Selamat datang kembali, " + user.name);
+                // Izinkan masuk jika password kustom cocok, atau jika menggunakan password default 'password123'
+                if (user.password === password || password === 'password123') {
+                    currentAlumni = user;
+                    sessionStorage.setItem('current_alumni', JSON.stringify(user));
+                    closeLoginModal();
+                    updateAuthUiState();
+                    switchView('cv');
+                    alert("Login berhasil! Selamat datang kembali, " + user.name);
+                } else {
+                    alert("Password Anda salah. Harap periksa kembali!");
+                }
             } else {
-                alert("Email atau password Anda salah. Harap periksa kembali!");
+                alert("Email atau NISN Anda belum terdaftar di sistem. Silakan registrasi terlebih dahulu!");
             }
         }
 
@@ -3879,7 +4035,7 @@
             const users = JSON.parse(localStorage.getItem('bkk_users')) || [];
 
             if (users.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Belum ada pendaftar alumni.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Belum ada pendaftar alumni.</td></tr>`;
                 return;
             }
 
@@ -3918,13 +4074,23 @@
                     `;
                 }
 
+                // Check verification status
+                const isWhitelisted = STUDENT_WHITELIST.some(s => s.n.toString() === (user.nisn || '').toString());
+                const verifikasiHtml = isWhitelisted 
+                    ? `<span class="status-badge" style="background:#e6f4ea; color:#137333; padding:4px 8px; border-radius:4px; font-size:0.75rem; font-weight:bold;"><i class="fa-solid fa-circle-check"></i> Terverifikasi NIS</span>`
+                    : `<span class="status-badge" style="background:#f1f3f4; color:#5f6368; padding:4px 8px; border-radius:4px; font-size:0.75rem; font-weight:bold;"><i class="fa-solid fa-user-pen"></i> Alumni Lama</span>`;
+
+                const tahunLulusHtml = user.tahunLulus || (isWhitelisted ? "2026" : "-");
+
                 const tr = `
                     <tr>
                         <td><strong>${user.name}</strong></td>
                         <td>${user.nisn || '-'}</td>
                         <td>${user.jurusan || '-'}</td>
+                        <td>${tahunLulusHtml}</td>
+                        <td>${verifikasiHtml}</td>
                         <td><span class="status-badge ${badgeClass}">${badgeText}</span></td>
-                        <td style="display:flex; gap:8px;">${actionBtns}</td>
+                        <td style="display:flex; gap:4px;">${actionBtns}</td>
                     </tr>
                 `;
                 tbody.innerHTML += tr;
@@ -3966,7 +4132,7 @@
             const users = JSON.parse(localStorage.getItem('bkk_users')) || [];
             
             if (users.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Belum ada pendaftar akun alumni.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;">Belum ada pendaftar akun alumni.</td></tr>`;
                 return;
             }
 
@@ -3981,14 +4147,33 @@
                     </button>
                 `;
 
+                // Check verification status
+                const isWhitelisted = STUDENT_WHITELIST.some(s => s.n.toString() === (user.nisn || '').toString());
+                const verifikasiHtml = isWhitelisted 
+                    ? `<span class="status-badge" style="background:#e6f4ea; color:#137333; padding:4px 8px; border-radius:4px; font-size:0.75rem; font-weight:bold;"><i class="fa-solid fa-circle-check"></i> Terverifikasi NIS</span>`
+                    : `<span class="status-badge" style="background:#f1f3f4; color:#5f6368; padding:4px 8px; border-radius:4px; font-size:0.75rem; font-weight:bold;"><i class="fa-solid fa-user-pen"></i> Alumni Lama</span>`;
+
+                const tahunLulusHtml = user.tahunLulus || (isWhitelisted ? "2026" : "-");
+
+                let waLinkHtml = '-';
+                if (user.wa) {
+                    const cleanWa = user.wa.replace(/[^0-9]/g, '');
+                    const waFormatted = cleanWa.startsWith('0') ? '62' + cleanWa.substring(1) : cleanWa;
+                    waLinkHtml = `<a href="https://wa.me/${waFormatted}" target="_blank" style="color:#16a34a; font-weight:bold; display:inline-flex; align-items:center; gap:4px; text-decoration:none;">
+                        <i class="fa-brands fa-whatsapp" style="font-size:1rem;"></i> ${user.wa}
+                    </a>`;
+                }
+
                 const tr = `
                     <tr>
                         <td><strong>${user.name}</strong></td>
                         <td>${user.nisn || '-'}</td>
                         <td>${user.jurusan || '-'}</td>
+                        <td>${tahunLulusHtml}</td>
+                        <td>${verifikasiHtml}</td>
                         <td>${user.tempatLahir ? user.tempatLahir + ', ' + user.tanggalLahir : '-'}</td>
                         <td style="font-size:0.8rem; max-width:200px; overflow:hidden; text-overflow:ellipsis;">${user.alamat || '-'}</td>
-                        <td>${user.wa ? '+' + user.wa : '-'}</td>
+                        <td>${waLinkHtml}</td>
                         <td style="display:flex; gap:4px;">${actionHtml}</td>
                     </tr>
                 `;
